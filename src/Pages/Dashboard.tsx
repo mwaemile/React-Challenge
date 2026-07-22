@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Button from "../components/Button";
 import Input from "../components/Input";
 import TodoList from "../components/TodoList";
@@ -17,13 +19,9 @@ type User = {
   password: string;
 };
 
-type DashboardProps = {
-  onLogout: () => void;
-};
 
-export default function Dashboard({
-  onLogout,
-}: DashboardProps) {
+export default function Dashboard() {
+  const navigate = useNavigate();
   const [todoText, setTodoText] = useState("");
   const [todos, setTodos] = useState<Todo[]>([]);
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
@@ -114,9 +112,9 @@ const updateTodo = () => {
 };
 
   const handleLogout = () => {
-    localStorage.removeItem("currentUser");
-    onLogout();
-  };
+  localStorage.removeItem("currentUser");
+  navigate("/");
+};
 
   return (
   <DashboardLayout

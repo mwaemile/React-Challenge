@@ -3,16 +3,12 @@ import { useState } from "react";
 import Input from "../components/Input";
 import Card from "../components/Card";
 import Button from "../components/Button";
+import { useNavigate } from "react-router-dom";
 
-type RegisterProps = {
-  onRegister: () => void;
-  goToLogin: () => void;
-};
 
-export default function Register({
-  onRegister,
-  goToLogin,
-}: RegisterProps){
+
+export default function Register() {
+  const navigate = useNavigate();
        const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -75,8 +71,8 @@ const [messageType, setMessageType] = useState<
   setPassword("");
 
   setTimeout(() => {
-    onRegister();
-  }, 2000);
+  navigate("/");
+}, 2000);
 };
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -125,7 +121,7 @@ const [messageType, setMessageType] = useState<
           <p className="text-center mt-4">
   Already have an account?{" "}
   <button
-    onClick={goToLogin}
+    onClick={() => navigate("/")}
     className="text-blue-600 hover:underline"
   >
     Login

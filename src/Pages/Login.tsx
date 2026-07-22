@@ -1,22 +1,19 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Card from "../components/Card";
 import Input from "../components/Input";
 import Button from "../components/Button";
 
-type LoginProps = {
-  onLogin: () => void;
-  goToRegister: () => void;
-};
-export default function Login({
-  onLogin,
-  goToRegister,
-}: LoginProps){
+export default function Login() {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-const [messageType, setMessageType] = useState<
-  "success" | "error" | ""
->("");
+  const [messageType, setMessageType] = useState<
+    "" | "success" | "error"
+  >("");
 
   const handleLogin = () => {
   const users = JSON.parse(
@@ -47,7 +44,7 @@ return;
 setMessageType("success");
 
 setTimeout(() => {
-  onLogin();
+  navigate("/dashboard");
 }, 1000);
 };
   return (
@@ -90,7 +87,7 @@ setTimeout(() => {
           <p className="text-center mt-4">
   Don't have an account?{" "}
   <button
-    onClick={goToRegister}
+    onClick={() => navigate("/register")}
     className="text-blue-600 hover:underline"
   >
     Register

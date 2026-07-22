@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
-import Loading from "./components/Loading";
-import Register from "./Pages/Register";
-import Login from "./Pages/Login";
-import Dashboard from "./Pages/Dashboard";
+import { Routes, Route, Navigate } from "react-router-dom";
 
+import Loading from "./components/Loading";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
+import Dashboard from "./Pages/Dashboard";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
- const [page, setPage] = useState<"login" | "register">("login");
-
-  // Show loading screen for 3 seconds
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -21,39 +19,26 @@ export default function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Check if a user is already logged in
-  useEffect(() => {
-    const currentUser = localStorage.getItem("currentUser");
-
-    if (currentUser) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
   if (loading) {
     return <Loading />;
   }
 
-  if (!isLoggedIn) {
-  if (page === "register") {
-    return (
-      <Register
-        onRegister={() => setPage("login")}
-        goToLogin={() => setPage("login")}
-      />
-    );
-  }
+  return (
+    <Routes>
+      <Route path="/" element={<Login />} />
 
-  return (
-    <Login
-      onLogin={() => setIsLoggedIn(true)}
-      goToRegister={() => setPage("register")}
-    />
-  );
-}
-  return (
-    <Dashboard
-      onLogout={() => setIsLoggedIn(false)}
-    />
+      <Route path="/register" element={<Register />} />
+
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
