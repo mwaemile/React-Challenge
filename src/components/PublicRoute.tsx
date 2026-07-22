@@ -1,16 +1,16 @@
 import { Navigate } from "react-router-dom";
 
-type ProtectedRouteProps = {
+type PublicRouteProps = {
   children: React.ReactNode;
 };
 
-export default function ProtectedRoute({
+export default function PublicRoute({
   children,
-}: ProtectedRouteProps) {
+}: PublicRouteProps) {
   const currentUser = localStorage.getItem("currentUser");
 
-  if (!currentUser) {
-  return <Navigate to="/login" replace />;
+  if (currentUser) {
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <>{children}</>;

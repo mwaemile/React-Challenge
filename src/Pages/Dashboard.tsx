@@ -113,7 +113,7 @@ const updateTodo = () => {
 
   const handleLogout = () => {
   localStorage.removeItem("currentUser");
-  navigate("/");
+  navigate("/login");
 };
 
   return (

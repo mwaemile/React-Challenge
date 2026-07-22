@@ -71,7 +71,7 @@ const [messageType, setMessageType] = useState<
   setPassword("");
 
   setTimeout(() => {
-  navigate("/");
+  navigate("/login");
 }, 2000);
 };
   return (
@@ -121,7 +121,7 @@ const [messageType, setMessageType] = useState<
           <p className="text-center mt-4">
   Already have an account?{" "}
   <button
-    onClick={() => navigate("/")}
+    onClick={() => navigate("/login")}
     className="text-blue-600 hover:underline"
   >
     Login

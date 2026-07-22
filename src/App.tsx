@@ -7,6 +7,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Dashboard from "./Pages/Dashboard";
+import PublicRoute from "./components/PublicRoute";
+import Home from "./Pages/Home";
+
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -24,21 +27,37 @@ export default function App() {
   }
 
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
+  <Routes>
+  <Route path="/" element={<Home />} />
 
-      <Route path="/register" element={<Register />} />
+  <Route
+    path="/login"
+    element={
+      <PublicRoute>
+        <Login />
+      </PublicRoute>
+    }
+  />
 
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        }
-      />
+  <Route
+    path="/register"
+    element={
+      <PublicRoute>
+        <Register />
+      </PublicRoute>
+    }
+  />
 
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
-  );
+  <Route
+    path="/dashboard"
+    element={
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
+    }
+  />
+
+  <Route path="*" element={<Navigate to="/" replace />} />
+</Routes>
+);
 }
